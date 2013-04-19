@@ -76,9 +76,7 @@ void CSnake::putCandyRandom(){
 		map[candy[1]][candy[0]] = FLAG_EMPTY;
 	}
 
-	//int ran = rand();
 	int loc = rand() % (HEIGHT * WIDTH - snakeLength);
-	//int loc = (int)(ran / (RAND_MAX + 1.0) * k);
 	for(int i = 0; i < HEIGHT; i++){
 		if(loc < WIDTH - map[i][WIDTH]){
 			for(int j = 0; j < WIDTH; j++){
@@ -88,13 +86,13 @@ void CSnake::putCandyRandom(){
 						candy[0] = j;
 						candy[1] = i;
 						map[i][j] = FLAG_CANDY;
-						break;
+						return;
 					}else{
 						loc--;
 					}
 				}
 			}
-			break;
+			return;
 		}else{
 			loc -= WIDTH - map[i][WIDTH];
 		}
@@ -203,13 +201,6 @@ void CSnake::drawSnake(){
 	glEnd();
 	
 	glColor3f(255, 255, 255);
-	//glPointSize(POINTSIZE);
-	//glBegin(GL_POINTS);
-	//{
-	//	glVertex2f((candy[0] + 0.5) * PIXELUNIT + EDGE * 2,
-	//		(candy[1] + 0.5) * PIXELUNIT + EDGE * 2);
-	//}
-	//glEnd();
 	uDrawSolidCircle((candy[0] + 0.5) * PIXELUNIT + EDGE * 2,
 		(candy[1] + 0.5) * PIXELUNIT + EDGE * 2, POINTSIZE, 10);
 }
