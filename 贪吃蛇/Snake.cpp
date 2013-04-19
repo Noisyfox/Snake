@@ -34,7 +34,7 @@ CSnake::CSnake(){
 CSnake::~CSnake(){
 }
 
-bool CSnake::moveTowards(int direction){
+bool CSnake::moveTowards(SnakeMovement direction){
 	if(direction > 3 || direction < 0 || 
 		direction + snakeDir == 3)direction = snakeDir;
 

@@ -3,6 +3,7 @@
 #include <time.h>
 #include <Windows.h>
 #include "Snake.h"
+#include "AI.h"
 
 #define FPSCOUNT 60.0
 
@@ -11,6 +12,7 @@ int width=WIDTH * PIXELUNIT + EDGE * 4 ;
 int height=HEIGHT * PIXELUNIT + EDGE * 4 ;
 
 CSnake snake;
+CSnakeAI ai;
 
 double CalFrequency()
 {
@@ -44,19 +46,32 @@ void myDisplay(void)
 }
 
 void keyboardEvent(int key, int x, int y){
-	switch(key){
-	case GLUT_KEY_UP:
-		snake.moveTowards(DIR_UP);
-		break;
-	case GLUT_KEY_DOWN:
-		snake.moveTowards(DIR_DOWN);
-		break;
-	case GLUT_KEY_LEFT:
-		snake.moveTowards(DIR_LEFT);
-		break;
-	case GLUT_KEY_RIGHT:
-		snake.moveTowards(DIR_RIGHT);
-		break;
+	//switch(key){
+	//case GLUT_KEY_UP:
+	//	snake.moveTowards(DIR_UP);
+	//	break;
+	//case GLUT_KEY_DOWN:
+	//	snake.moveTowards(DIR_DOWN);
+	//	break;
+	//case GLUT_KEY_LEFT:
+	//	snake.moveTowards(DIR_LEFT);
+	//	break;
+	//case GLUT_KEY_RIGHT:
+	//	snake.moveTowards(DIR_RIGHT);
+	//	break;
+	//}
+}
+
+void aiProcess(int value){
+	time_t stime = time(0);
+	bool result = snake.moveTowards(ai.AICallBack(snake));
+	if(result){
+		time_t dtime = time(0) - stime;
+		if(dtime >= 300){
+			glutTimerFunc(1, aiProcess, 0);
+		}else{
+			glutTimerFunc(300 - dtime, aiProcess, 0);
+		}
 	}
 }
 
@@ -98,6 +113,7 @@ int main(int argc, char *argv[])
 	glutIdleFunc(myIdle);
 	glutSpecialFunc(keyboardEvent);
 	glutTimerFunc(10,fpsControl,0);
+	glutTimerFunc(1, aiProcess, 0);
 	init();
 	glutMainLoop();
 

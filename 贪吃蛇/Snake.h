@@ -9,18 +9,20 @@
 #define FLAG_EMPTY 0
 #define FLAG_CANDY -1
 
+typedef int SnakeMovement;
+
 class CSnake{
 public:
 	const static int movement[4][2];
 	int snakeLength;
-	int snakeDir;//0ср1ио3вС2об
+	SnakeMovement snakeDir;
 	int map[HEIGHT][WIDTH+1];
 	int snake[HEIGHT * WIDTH][2];
 	int candy[2];
 	CSnake();
 	~CSnake();
 	void putCandyRandom();
-	bool moveTowards(int direction);
+	bool moveTowards(SnakeMovement direction);
 	void drawSnake();
 };
 

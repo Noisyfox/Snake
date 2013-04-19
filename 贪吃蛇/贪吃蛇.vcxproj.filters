@@ -24,6 +24,9 @@
     <ClInclude Include="GLUtil.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -33,6 +36,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="GLUtil.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
