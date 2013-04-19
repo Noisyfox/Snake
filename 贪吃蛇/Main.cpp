@@ -3,6 +3,7 @@
 #include <ctime>
 #include <Windows.h>
 #include "Snake.h"
+#pragma warning(disable:4996)
 
 #ifdef USING_AI
 #include "AI.h"
@@ -19,7 +20,7 @@ CSnake snake;
 #ifdef USING_AI
 CSnakeAI ai(snake);
 #else
-SnakeMovement lastKeyDown = -1;
+SnakeMovement lastKeyDown = DIR_UP;
 #endif
 
 double CalFrequency()
@@ -43,7 +44,7 @@ double CalFrequency()
 void myDisplay(void)
 {
 	double FPS = CalFrequency();
-	printf("FPS = %f\n", FPS);
+	//printf("FPS = %f\n", FPS);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
@@ -88,6 +89,7 @@ void gameProcess(int value){
 	movem = keyboardGaming();
 #endif
 
+	if(movem == -1)return;
 	bool result = snake.moveTowards(movem);
 	if(result){
 		time_t dtime = time(0) - stime;
@@ -127,6 +129,10 @@ void init(){
 
 int main(int argc, char *argv[])
 {
+#ifdef DEBUG
+	freopen( "file.txt", "w", stdout );
+#endif
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 	glutInitWindowPosition(100, 100);

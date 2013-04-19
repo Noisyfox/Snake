@@ -8,10 +8,10 @@ typedef struct _HeapNode{
 }SHeapNode, * ptrSHeapNode;
 
 typedef struct _Node{
-	int G;
+	int G, H;
+	int father;
 	bool inOpen;
 	bool inClose;
-	bool isInited;
 }SNode, * ptrSNode;
 
 class CSnakeAI{
@@ -24,14 +24,19 @@ private:
 	ptrSHeapNode OpenList;
 	int OpenListLen;
 	ptrSNode mapNodes;
+	int * pathLocations;
+	int pathLength;
 
 	void initMemory();
 	void freeMemory();
 	
 	void AddHeapNode(int F, int location);
 	void RemoveHeapRoot();
+	void UpdateF(int location, int newF);
 	ptrSHeapNode GetHeapRoot();
 
+	int doAASearch();//返回路径长度
+	int checkAround(int loction);
 };
 
 #endif

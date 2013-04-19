@@ -7,8 +7,9 @@
 #define EDGE 5.0 //边界宽度
 #define LINEWIDTH 2.0 // 线宽
 #define POINTSIZE 3.5 // 点直径
-#define STEPTIME 100 //两次移动间隔时间
+#define STEPTIME 10 //两次移动间隔时间
 //#define EDGE_REPEAT //边界循环
 #define USING_AI //启用AI
+//#define DEBUG //启用调试
 
 #endif
