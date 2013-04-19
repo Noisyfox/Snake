@@ -7,5 +7,6 @@
 #define EDGE 5.0 //边界宽度
 #define LINEWIDTH 2.0 // 线宽
 #define POINTSIZE 3.5 // 点直径
+#define EDGE_REPEAT //边界循环
 
 #endif

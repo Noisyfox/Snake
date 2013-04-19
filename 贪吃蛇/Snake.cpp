@@ -41,8 +41,15 @@ bool CSnake::moveTowards(int direction){
 	int newHead_x = snake[snakeLength - 1][0] + movement[direction][0];
 	int newHead_y = snake[snakeLength - 1][1] + movement[direction][1];
 
+#ifndef EDGE_REPEAT
 	if(newHead_x < 0 || newHead_x >= WIDTH 
 		|| newHead_y < 0 || newHead_y >= HEIGHT)return false;
+#else
+	if(newHead_x < 0)newHead_x += WIDTH;
+	else if(newHead_x >= WIDTH)newHead_x -= WIDTH;
+	if(newHead_y < 0)newHead_y += HEIGHT;
+	else if(newHead_y >= HEIGHT)newHead_y -= HEIGHT;
+#endif
 
 	if(map[newHead_y][newHead_x] == FLAG_CANDY){
 		map[newHead_y][WIDTH]++;
