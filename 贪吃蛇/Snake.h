@@ -1,5 +1,5 @@
-#ifndef SNAKE
-#define SNAKE
+#ifndef SNAKE_H
+#define SNAKE_H
 #include "SnakeConfig.h"
 #define DIR_RIGHT 0
 #define DIR_UP 1
