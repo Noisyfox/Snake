@@ -50,7 +50,7 @@ bool CSnake::moveTowards(SnakeMovement direction){
 	if(newHead_y < 0)newHead_y += HEIGHT;
 	else if(newHead_y >= HEIGHT)newHead_y -= HEIGHT;
 #endif
-
+	
 	if(map[newHead_y][newHead_x] == FLAG_CANDY){
 		map[newHead_y][WIDTH]++;
 		snakeLength++;

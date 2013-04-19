@@ -1,6 +1,6 @@
 #include <gl/glut.h>
-#include <stdio.h>
-#include <time.h>
+#include <cstdio>
+#include <ctime>
 #include <Windows.h>
 #include "Snake.h"
 
@@ -17,7 +17,7 @@ int height=HEIGHT * PIXELUNIT + EDGE * 4 ;
 CSnake snake;
 
 #ifdef USING_AI
-CSnakeAI ai;
+CSnakeAI ai(snake);
 #else
 SnakeMovement lastKeyDown = -1;
 #endif
@@ -83,7 +83,7 @@ void gameProcess(int value){
 	SnakeMovement movem = 0;
 
 #ifdef USING_AI
-	movem = ai.AICallBack(snake);
+	movem = ai.AICallBack();
 #else
 	movem = keyboardGaming();
 #endif
