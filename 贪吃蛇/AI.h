@@ -22,12 +22,15 @@ public:
 private:
 	CSnake &snake;
 	ptrSHeapNode OpenList;
-	ptrSNode mapNodes;
 	int OpenListLen;
+	ptrSNode mapNodes;
 
 	void initMemory();
 	void freeMemory();
-	void HeapRemoveRoot();
+	
+	void AddHeapNode(int F, int location);
+	void RemoveHeapRoot();
+	ptrSHeapNode GetHeapRoot();
 
 };
 
