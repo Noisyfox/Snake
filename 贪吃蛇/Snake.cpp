@@ -23,7 +23,7 @@ CSnake::CSnake(){
 	map[snake[0][1]][snake[0][0]] = 1;
 	map[snake[1][1]][snake[1][0]] = 2;
 	map[snake[2][1]][snake[2][0]] = 3;
-	
+
 	map[snake[0][1]][WIDTH] = 1;
 	map[snake[1][1]][WIDTH] = 1;
 	map[snake[2][1]][WIDTH] = 1;
@@ -111,7 +111,7 @@ void CSnake::drawSnake(){
 		glVertex2f(EDGE, EDGE * 3 + HEIGHT * PIXELUNIT);
 	}
 	glEnd();
-	
+
 	glLineWidth(1);
 	for(int i = snakeLength - 2; i >= 0; i--){
 		GLfloat x = snake[i][0] * PIXELUNIT + EDGE * 2;
@@ -126,12 +126,52 @@ void CSnake::drawSnake(){
 		}
 		glEnd();
 		glColor3f(0, 0, 0);
-		glBegin(GL_LINE_LOOP);
+		int c = 0;
+		glBegin(GL_LINES);
 		{  
-			glVertex2f(x, y);    
-			glVertex2f(x, y + PIXELUNIT);     
-			glVertex2f(x + PIXELUNIT, y + PIXELUNIT);     
-			glVertex2f(x + PIXELUNIT, y);
+			for(int j = 0; j < 4; j++){
+				if(!(c == 2 || (i == 0 && c == 1))){
+					if(i != 0){
+						if(snake[i][0] + movement[j][0] == snake[i - 1][0] && snake[i][1] + movement[j][1] == snake[i - 1][1]){
+							c++;
+							continue;
+						}
+					}
+					if(snake[i][0] + movement[j][0] == snake[i + 1][0] && snake[i][1] + movement[j][1] == snake[i + 1][1]){
+						c++;
+						continue;
+					}
+				}
+				float v[2][2];
+				switch(j){
+				case DIR_RIGHT:
+					v[0][0] = x + PIXELUNIT;
+					v[0][1] = y;
+					v[1][0] = x + PIXELUNIT;
+					v[1][1] = y + PIXELUNIT;
+					break;
+				case DIR_UP:
+					v[0][0] = x;
+					v[0][1] = y;
+					v[1][0] = x + PIXELUNIT;
+					v[1][1] = y;
+					break;
+				case DIR_LEFT:
+					v[0][0] = x;
+					v[0][1] = y;
+					v[1][0] = x;
+					v[1][1] = y + PIXELUNIT;
+					break;
+				case DIR_DOWN:
+					v[0][0] = x;
+					v[0][1] = y + PIXELUNIT;
+					v[1][0] = x + PIXELUNIT;
+					v[1][1] = y + PIXELUNIT;
+					break;
+				}
+				glVertex2fv(v[0]);
+				glVertex2fv(v[1]);
+			}
 		}
 		glEnd();
 	}
@@ -140,66 +180,66 @@ void CSnake::drawSnake(){
 	GLfloat vi[4][2];
 	switch(snakeDir){
 	case DIR_RIGHT:
-		vi[0][0] = x + PIXELUNIT;
-		vi[0][1] = y + PIXELUNIT * 0.25;
-		vi[1][0] = x + PIXELUNIT;
-		vi[1][1] = y + PIXELUNIT * 0.75;
-		vi[2][0] = x;
-		vi[2][1] = y + PIXELUNIT;
-		vi[3][0] = x;
-		vi[3][1] = y;
-		break;
-	case DIR_UP:
-		vi[0][0] = x + PIXELUNIT * 0.25;
+		vi[0][0] = x;
 		vi[0][1] = y;
-		vi[1][0] = x + PIXELUNIT * 0.75;
-		vi[1][1] = y;
+		vi[1][0] = x + PIXELUNIT;
+		vi[1][1] = y + PIXELUNIT * 0.25;
 		vi[2][0] = x + PIXELUNIT;
-		vi[2][1] = y + PIXELUNIT;
+		vi[2][1] = y + PIXELUNIT * 0.75;
 		vi[3][0] = x;
 		vi[3][1] = y + PIXELUNIT;
 		break;
-	case DIR_LEFT:
+	case DIR_UP:
 		vi[0][0] = x;
-		vi[0][1] = y + PIXELUNIT * 0.25;
+		vi[0][1] = y + PIXELUNIT;
+		vi[1][0] = x + PIXELUNIT * 0.25;
+		vi[1][1] = y;
+		vi[2][0] = x + PIXELUNIT * 0.75;
+		vi[2][1] = y;
+		vi[3][0] = x + PIXELUNIT;
+		vi[3][1] = y + PIXELUNIT;
+		break;
+	case DIR_LEFT:
+		vi[0][0] = x + PIXELUNIT;
+		vi[0][1] = y;
 		vi[1][0] = x;
-		vi[1][1] = y + PIXELUNIT * 0.75;
-		vi[2][0] = x + PIXELUNIT;
+		vi[1][1] = y + PIXELUNIT * 0.25;
+		vi[2][0] = x;
+		vi[2][1] = y + PIXELUNIT * 0.75;
+		vi[3][0] = x + PIXELUNIT;
+		vi[3][1] = y + PIXELUNIT;
+		break;
+	case DIR_DOWN:
+		vi[0][0] = x;
+		vi[0][1] = y;
+		vi[1][0] = x + PIXELUNIT * 0.25;
+		vi[1][1] = y + PIXELUNIT;
+		vi[2][0] = x + PIXELUNIT * 0.75;
 		vi[2][1] = y + PIXELUNIT;
 		vi[3][0] = x + PIXELUNIT;
 		vi[3][1] = y;
 		break;
-	case DIR_DOWN:
-		vi[0][0] = x + PIXELUNIT * 0.25;
-		vi[0][1] = y + PIXELUNIT;
-		vi[1][0] = x + PIXELUNIT * 0.75;
-		vi[1][1] = y + PIXELUNIT;
-		vi[2][0] = x + PIXELUNIT;
-		vi[2][1] = y;
-		vi[3][0] = x;
-		vi[3][1] = y;
-		break;
 	}
-	
+
 	glColor3f(255, 255, 255);
 	glBegin(GL_QUADS);
-		{  
-			glVertex2fv(vi[0]);
-			glVertex2fv(vi[1]);
-			glVertex2fv(vi[2]);
-			glVertex2fv(vi[3]);
-		}
+	{  
+		glVertex2fv(vi[0]);
+		glVertex2fv(vi[1]);
+		glVertex2fv(vi[2]);
+		glVertex2fv(vi[3]);
+	}
 	glEnd();
 	glColor3f(0, 0, 0);
-	glBegin(GL_LINE_LOOP);
-		{  
-			glVertex2fv(vi[0]);
-			glVertex2fv(vi[1]);
-			glVertex2fv(vi[2]);
-			glVertex2fv(vi[3]);
-		}
+	glBegin(GL_LINE_STRIP);
+	{  
+		glVertex2fv(vi[0]);
+		glVertex2fv(vi[1]);
+		glVertex2fv(vi[2]);
+		glVertex2fv(vi[3]);
+	}
 	glEnd();
-	
+
 	glColor3f(255, 255, 255);
 	uDrawSolidCircle((candy[0] + 0.5) * PIXELUNIT + EDGE * 2,
 		(candy[1] + 0.5) * PIXELUNIT + EDGE * 2, POINTSIZE, 10);
