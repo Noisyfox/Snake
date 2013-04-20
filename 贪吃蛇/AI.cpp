@@ -30,7 +30,7 @@ SnakeMovement CSnakeAI::AICallBack(){
 	if(pathLength <= 1){
 		initMemory();
 		int result = doAASearch();
-		if(result == -1)return -1;
+		if(result == 0)return -1;
 	}
 	int loc1 = pathLocations[pathLength - 1];
 	int loc2 = pathLocations[pathLength - 2];
@@ -184,7 +184,8 @@ int CSnakeAI::doAASearch(){
 			printf("\n\n");
 #endif
 
-			return -1;
+			pathLength = 0;
+			return 0;
 		}
 
 	}
@@ -196,7 +197,7 @@ int CSnakeAI::doAASearch(){
 		cloc = mapNodes[cloc].father;
 	}
 
-	return 0;
+	return pathLength;
 }
 
 int CSnakeAI::checkAround(int location){
